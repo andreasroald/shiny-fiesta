@@ -66,7 +66,12 @@ class Game:
         hits =  pygame.sprite.spritecollide(self.player, self.walls, False)
 
         if hits:
-            print(hits)
+            if self.player.moving_up or self.player.moving_down:
+                self.player.pos.y -= self.player.vel.y + 0.5 * self.player.acc.y
+                self.player.vel.y = 0
+            if self.player.moving_left or self.player.moving_right:
+                self.player.pos.x -= self.player.vel.y + 0.5 * self.player.acc.x
+                self.player.vel.x = 0
 
     # Game loop - Rendering/Drawing
     def draw(self):
