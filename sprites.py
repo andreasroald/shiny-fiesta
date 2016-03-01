@@ -13,8 +13,9 @@ class Player(pygame.sprite.Sprite):
         self.image = player_standing.convert_alpha()
         self.image_original = self.image.copy()
 
+
         self.rect = self.image.get_rect(center = (display_width/2, display_height/2))
-        self.hitbox = pygame.Rect((0, 0, 42, 42), center=self.rect.center)
+        self.radius = 25
         self.old_rect = self.rect.copy()
 
         self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
@@ -28,7 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.left_lock = False
         self.down_lock = False
         self.right_lock = False
-        
+
         self.pos = vec(display_width/2, display_height/2)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
@@ -127,7 +128,6 @@ class Player(pygame.sprite.Sprite):
 
         # Make player change position
         self.rect.center = self.pos.x, self.pos.y
-        self.hitbox.center = self.rect.center
 
 # Create a wall class
 class Wall(pygame.sprite.Sprite):
