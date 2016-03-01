@@ -1,4 +1,5 @@
 import pygame
+import random
 import levels
 from sprites import *
 from settings import *
@@ -61,23 +62,22 @@ class Game:
     # Game loop - Update
     def update(self):
 
-        hits =  pygame.sprite.spritecollide(self.player, self.walls, False)
-        msg = ""
+        hits =  pygame.sprite.spritecollide(self.player, self.walls, False, pygame.sprite.collide_circle)
 
         if hits:
 
             if self.player.moving_up:
-                self.player.pos.y -=  self.player.vel.y + 0.5 * self.player.acc.y
+                self.player.pos.y -= self.player.vel.y + 0.5 * self.player.acc.y
                 self.player.vel.y = 0
             if self.player.moving_left:
-                self.player.pos.x -=  self.player.vel.x + 0.5 * self.player.acc.x
-                self.player.vel.y = 0
+                self.player.pos.x -= self.player.vel.x + 0.5 * self.player.acc.x
+                self.player.vel.x = 0
             if self.player.moving_down:
-                self.player.pos.y -=  self.player.vel.y + 0.5 * self.player.acc.y
+                self.player.pos.y -= self.player.vel.y + 0.5 * self.player.acc.y
                 self.player.vel.y = 0
             if self.player.moving_right:
-                self.player.pos.x -=  self.player.vel.x + 0.5 * self.player.acc.x
-                self.player.vel.y = 0
+                self.player.pos.x -= self.player.vel.x + 0.5 * self.player.acc.x
+                self.player.vel.x = 0
 
         self.players.update()
         self.gui.update()
@@ -89,6 +89,7 @@ class Game:
         self.players.draw(self.game_display)
         self.walls.draw(self.game_display)
         self.gui.draw(self.game_display)
+        pygame.draw.circle(self.game_display, green, self.player.rect.center, self.player.radius)
 
         pygame.mouse.set_visible(0)
         pygame.display.update()
@@ -100,4 +101,4 @@ while game.running:
     game.new()
 
 pygame.quit()
-quit()  
+quit()
