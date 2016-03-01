@@ -60,18 +60,27 @@ class Game:
 
     # Game loop - Update
     def update(self):
-        self.players.update()
-        self.gui.update()
 
         hits =  pygame.sprite.spritecollide(self.player, self.walls, False)
+        msg = ""
 
         if hits:
-            if self.player.moving_up or self.player.moving_down:
-                self.player.pos.y -= self.player.vel.y + 0.5 * self.player.acc.y
+
+            if self.player.moving_up:
+                self.player.pos.y -=  self.player.vel.y + 0.5 * self.player.acc.y
                 self.player.vel.y = 0
-            if self.player.moving_left or self.player.moving_right:
-                self.player.pos.x -= self.player.vel.y + 0.5 * self.player.acc.x
-                self.player.vel.x = 0
+            if self.player.moving_left:
+                self.player.pos.x -=  self.player.vel.x + 0.5 * self.player.acc.x
+                self.player.vel.y = 0
+            if self.player.moving_down:
+                self.player.pos.y -=  self.player.vel.y + 0.5 * self.player.acc.y
+                self.player.vel.y = 0
+            if self.player.moving_right:
+                self.player.pos.x -=  self.player.vel.x + 0.5 * self.player.acc.x
+                self.player.vel.y = 0
+
+        self.players.update()
+        self.gui.update()
 
     # Game loop - Rendering/Drawing
     def draw(self):
