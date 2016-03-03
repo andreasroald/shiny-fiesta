@@ -66,7 +66,7 @@ class Game:
     # Game loop - Update
     def update(self):
 
-        hits_walls =  pygame.sprite.spritecollide(self.player, self.walls, False)
+        hits_walls =  pygame.sprite.spritecollide(self.player, self.walls, False, pygame.sprite.collide_circle)
 
         if hits_walls:
 
