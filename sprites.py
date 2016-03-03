@@ -132,13 +132,14 @@ class Player(pygame.sprite.Sprite):
 # Create a wall class
 class Wall(pygame.sprite.Sprite):
     # Initialize the wall class
-    def __init__(self, x, y, w, h, color = black):
+    def __init__(self, x, y, w, h, color = black, id=None):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((w, h))
         self.image.fill(color)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.id = id
 
 # Create mouse pointer class
 class Pointer(pygame.sprite.Sprite):

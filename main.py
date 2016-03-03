@@ -22,6 +22,9 @@ class Game:
                 if cols == 1:
                     w = Wall(levels.level_x, levels.level_y, 40, 40)
                     self.walls.add(w)
+                elif cols == 2:
+                    w = Wall(levels.level_x, levels.level_y, 40, 40, color=white, id="1")
+                    self.exits.add(w)
                 levels.level_x += 40
             levels.level_x = 0
             levels.level_y += 40
@@ -31,6 +34,7 @@ class Game:
     def new(self):
         self.players = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
+        self.exits = pygame.sprite.Group()
         self.gui = pygame.sprite.Group()
 
         self.create_level(levels.level_1)
@@ -62,30 +66,35 @@ class Game:
     # Game loop - Update
     def update(self):
 
-        hits =  pygame.sprite.spritecollide(self.player, self.walls, False, pygame.sprite.collide_circle)
+        hits_walls =  pygame.sprite.spritecollide(self.player, self.walls, False)
 
-        if hits:
+        if hits_walls:
 
-            if self.player.moving_up:
+            print("collision {0}".format(random.randint(0, 10)))
+
+            if self.player.vel.y < 0:
                 self.player.pos.y -= self.player.vel.y + 0.5 * self.player.acc.y
                 self.player.vel.y = 0
-            if self.player.moving_left:
+            elif self.player.vel.y > 0:
+                self.player.pos.y -= self.player.vel.y + 0.5 * self.player.acc.y
+                self.player.vel.y = 0
+
+            if self.player.vel.x < 0:
                 self.player.pos.x -= self.player.vel.x + 0.5 * self.player.acc.x
                 self.player.vel.x = 0
-            if self.player.moving_down:
-                self.player.pos.y -= self.player.vel.y + 0.5 * self.player.acc.y
-                self.player.vel.y = 0
-            if self.player.moving_right:
+            elif self.player.vel.x > 0:
                 self.player.pos.x -= self.player.vel.x + 0.5 * self.player.acc.x
                 self.player.vel.x = 0
 
         self.players.update()
         self.gui.update()
 
+
     # Game loop - Rendering/Drawing
     def draw(self):
         self.game_display.fill(dark_gray)
 
+        self.exits.draw(self.game_display)
         self.players.draw(self.game_display)
         self.walls.draw(self.game_display)
         self.gui.draw(self.game_display)
